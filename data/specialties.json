@@ -1,0 +1,9 @@
+[
+  { "id": "cardio", "fr": "Cardiologie & Maladies Vasculaires", "ar": "أخصائي أمراض القلب والأوعية الدموية" },
+  { "id": "pediatrie", "fr": "Pédiatrie & Néonatologie", "ar": "أخصائية طب الأطفال وحديثي الولادة" },
+  { "id": "dentiste", "fr": "Chirurgie Dentaire & Implantologie", "ar": "جراحة وتجميل الأسنان" },
+  { "id": "generaliste", "fr": "Médecine Générale & Urgences", "ar": "طب عام واستشارات عاجلة" },
+  { "id": "gyneco", "fr": "Gynécologie Obstétrique & PMA", "ar": "أخصائية أمراض النساء والتوليد" },
+  { "id": "ophtalmo", "fr": "Ophtalmologie & Chirurgie Réfractive", "ar": "أخصائي أمراض وجراحة العيون" },
+  { "id": "dermato", "fr": "Dermatologie & Vénérologie", "ar": "أخصائي الأمراض الجلدية والتناسلية" }
+]

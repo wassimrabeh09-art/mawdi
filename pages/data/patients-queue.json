@@ -1,0 +1,45 @@
+{
+  "queueEntries": [
+    {
+      "id": "q-1",
+      "rank": 1,
+      "name": "Sami Mansour",
+      "phone": "+216 98 124 556",
+      "motif": "Consultation Suivi Cardiaque",
+      "status": "En Consultation",
+      "time": "09:30",
+      "payment": "Espèces (70 TND)"
+    },
+    {
+      "id": "q-2",
+      "rank": 2,
+      "name": "Amel Gharbi",
+      "phone": "+216 55 890 112",
+      "motif": "Électrocardiogramme & Lecture d'Analyses",
+      "status": "En salle d'attente",
+      "time": "10:00",
+      "payment": "CNAM (Prise en charge + 21 TND)"
+    },
+    {
+      "id": "q-3",
+      "rank": 3,
+      "name": "Mohamed Salah Jouini",
+      "phone": "+216 22 456 789",
+      "motif": "Nouveau Patient (Douleur Thoracique)",
+      "status": "En salle d'attente",
+      "time": "10:30",
+      "payment": "Chèque (70 TND)"
+    },
+    {
+      "id": "q-4",
+      "rank": 4,
+      "name": "Fatma Ben Abdallah",
+      "phone": "+216 20 999 123",
+      "motif": "Contrôle Tensionnel MAPA",
+      "status": "En salle d'attente",
+      "time": "11:00",
+      "payment": "Espèces (70 TND)"
+    }
+  ],
+  "delayMinutes": 0
+}

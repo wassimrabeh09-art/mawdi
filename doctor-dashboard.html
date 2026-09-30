@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>موعدي — Espace Médecin Praticien Console</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' };
+  </script>
+  <link rel="stylesheet" href="css/style.css" onerror="this.onerror=null; this.href='../css/style.css';">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    @media print {
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+      body { background: white !important; color: black !important; }
+    }
+
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #F0FAF9; color: #1e293b; }
+
+    .active-tab-pill {
+      background: linear-gradient(135deg, #00A896 0%, #0086cd 100%) !important;
+      color: white !important;
+      font-weight: 900 !important;
+      box-shadow: 0 6px 18px -3px rgba(0, 168, 150, 0.45) !important;
+      transform: translateY(-1px);
+    }
+    .inactive-tab-pill {
+      background: #f1f5f9;
+      color: #334155;
+      font-weight: 700;
+    }
+    .inactive-tab-pill:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    html.dark {
+      color-scheme: dark;
+      background-color: #080d1a !important;
+      color: #ffffff !important;
+    }
+    html.dark body {
+      background-color: #080d1a !important;
+      color: #ffffff !important;
+    }
+
+    html.dark header {
+      background-color: #061e24 !important;
+      border-bottom: 1px solid #133842 !important;
+    }
+
+    html.dark nav,
+    html.dark .bg-white {
+      background-color: #0e172a !important;
+      color: #ffffff !important;
+      border-color: #1e2d4a !important;
+    }
+
+    html.dark .bg-slate-50,
+    html.dark .bg-slate-100 {
+      background-color: #121c33 !important;
+      color: #f1f5f9 !important;
+      border-color: #1e2d4a !important;
+    }
+
+    html.dark .bg-teal-50,
+    html.dark .bg-teal-100,
+    html.dark .bg-[#edf7f9] {
+      background-color: #0d2b2e !important;
+      color: #2dd4bf !important;
+      border-color: #134e4a !important;
+    }
+
+    html.dark .bg-emerald-50,
+    html.dark .bg-emerald-100 {
+      background-color: #062e24 !important;
+      color: #34d399 !important;
+      border-color: #064e3b !important;
+    }
+
+    html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6 {
+      color: #ffffff !important;
+    }
+    html.dark p, html.dark span, html.dark label, html.dark div {
+      color: #f1f5f9;
+    }
+
+    html.dark .text-slate-900,
+    html.dark .text-slate-800,
+    html.dark .text-slate-700,
+    html.dark .text-[#032b43] {
+      color: #ffffff !important;
+    }
+
+    html.dark .text-slate-500,
+    html.dark .text-slate-400 {
+      color: #cbd5e1 !important;
+    }
+
+    html.dark .text-[#00A896] {
+      color: #2dd4bf !important;
+    }
+
+    html.dark table th {
+      color: #cbd5e1 !important;
+      background-color: #0f172a !important;
+      border-color: #1e2d4a !important;
+    }
+    html.dark table td {
+      color: #ffffff !important;
+      border-color: #1e2d4a !important;
+    }
+
+    html.dark input,
+    html.dark select,
+    html.dark textarea {
+      background-color: #121c33 !important;
+      color: #ffffff !important;
+      border-color: #263354 !important;
+    }
+
+    html.dark .inactive-tab-pill {
+      background: #121c33 !important;
+      color: #cbd5e1 !important;
+    }
+    html.dark .inactive-tab-pill:hover {
+      background: #1e2d4a !important;
+      color: #ffffff !important;
+    }
+  </style>
+</head>
+
+<body class="bg-[#F0FAF9] text-slate-900 antialiased min-h-screen flex flex-col font-['Plus_Jakarta_Sans'] transition-colors duration-300">
+
+  <!-- ═══════════════════════ CLEAN HEADER BAR ═══════════════════════ -->
+  <header class="bg-[#032b43] text-white h-16 shrink-0 z-40 shadow-md w-full px-4 sm:px-8 lg:px-10 flex items-center justify-between gap-4 no-print border-b border-teal-900/40">
+    
+    <!-- Brand & Doctor Credentials -->
+    <div class="flex items-center gap-4">
+      <a href="landing.html" class="flex items-center group">
+        <div class="bg-white px-3.5 py-1.5 rounded-2xl shadow-md flex items-center justify-center group-hover:scale-105 transition-all duration-300">
+          <img src="images/logo.png" onerror="this.onerror=null; this.src='images/logo.png';" alt="موعدي" class="h-8 sm:h-10 object-contain bg-white px-2 py-0.5 rounded-2xl shadow-sm">
+        </div>
+      </a>
+
+      <div class="h-6 w-px bg-white/20 hidden sm:block"></div>
+
+      <div class="hidden sm:flex items-center gap-2.5">
+        <h1 class="font-extrabold text-white text-sm sm:text-base">Dr. Selim Ben Ali</h1>
+        <span class="bg-emerald-500/20 text-emerald-300 text-xs font-bold px-2.5 py-0.5 rounded-full border border-emerald-500/30 flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Cardiologue
+        </span>
+      </div>
+    </div>
+
+    <!-- Right Controls: Notifications + Delay Alert + Day/Night Switch + Logout -->
+    <div class="flex items-center gap-3 sm:gap-4">
+
+      <!-- Notification Bell Dropdown (Matching User Image) -->
+      <div class="relative">
+        <button onclick="toggleDocNotifDropdown()" id="doc-notif-bell-btn" class="relative p-2 rounded-xl text-white hover:bg-white/15 transition-all cursor-pointer group flex items-center justify-center" title="Notifications">
+          <svg class="w-6 h-6 text-white group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+          </svg>
+          <span id="doc-notif-count" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-[#032b43] shadow-md animate-pulse">
+            3
+          </span>
+        </button>
+
+        <!-- Notification Panel Dropdown -->
+        <div id="doc-notif-menu" class="hidden absolute right-0 top-full mt-3 w-80 sm:w-96 bg-white dark:bg-[#0e172a] text-slate-800 dark:text-white rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 overflow-hidden">
+          <div class="p-4 bg-slate-50 dark:bg-[#121c33] border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="font-extrabold text-sm text-[#032b43] dark:text-white">🔔 Notifications Médecin</span>
+              <span id="doc-notif-badge-label" class="bg-red-500/10 text-red-600 dark:text-red-400 text-xs font-black px-2.5 py-0.5 rounded-full">3 nouvelles</span>
+            </div>
+            <button onclick="clearDocNotifications()" class="text-[11px] text-[#00A896] hover:underline font-bold">Tout marquer comme lu</button>
+          </div>
+          <div id="doc-notif-list" class="max-h-80 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800/60">
+            <div class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all flex items-start gap-3 cursor-pointer">
+              <span class="w-8 h-8 rounded-full bg-emerald-50 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 text-sm font-bold">⚡</span>
+              <div class="space-y-1">
+                <p class="text-xs font-bold text-slate-800 dark:text-white">Nouveau RDV Urgence</p>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400">Fatma Ben Abdallah a réservé une consultation à 10:30.</p>
+                <span class="text-[10px] text-slate-400 font-medium">Il y a 5 min</span>
+              </div>
+            </div>
+            <div class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all flex items-start gap-3 cursor-pointer">
+              <span class="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 text-sm font-bold">🔬</span>
+              <div class="space-y-1">
+                <p class="text-xs font-bold text-slate-800 dark:text-white">Bilan Biologique Reçu</p>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400">Le labo Pasteur a transmis le bilan de Sami Mansour.</p>
+                <span class="text-[10px] text-slate-400 font-medium">Il y a 18 min</span>
+              </div>
+            </div>
+            <div class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all flex items-start gap-3 cursor-pointer">
+              <span class="w-8 h-8 rounded-full bg-teal-50 dark:bg-teal-900/40 text-[#00A896] dark:text-teal-400 flex items-center justify-center shrink-0 text-sm font-bold">💳</span>
+              <div class="space-y-1">
+                <p class="text-xs font-bold text-slate-800 dark:text-white">Virement CNAM 70% Validé</p>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400">Paiement CNAM de 588 TND crédité sur le compte cabinet.</p>
+                <span class="text-[10px] text-slate-400 font-medium">Il y a 45 min</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delay Alert Status Indicator (UC-9) -->
+      <div id="header-delay-badge" class="hidden sm:flex items-center gap-2 bg-amber-500/20 border border-amber-400/40 text-amber-300 px-3 py-1 rounded-xl text-xs font-bold animate-pulse">
+        <span>⏱️ Retard: <strong id="header-delay-val">+15 min</strong></span>
+      </div>
+
+      <!-- Animated Day / Night Switch Replica -->
+      <div class="px-1 border-x border-white/20 flex items-center">
+        <button onclick="toggleAdminDayNightTheme()" id="admin-dn-toggle" title="Basculer Mode Jour / Nuit"
+          class="relative inline-flex items-center w-14 h-7 rounded-full p-0.5 cursor-pointer overflow-hidden shadow-md border border-white/40 transition-all duration-500 shrink-0 group hover:scale-105">
+          
+          <div id="admin-dn-track-sky" class="absolute inset-0 bg-gradient-to-r from-sky-400 via-cyan-300 to-teal-300 transition-opacity duration-500 opacity-100 flex items-end">
+            <svg class="w-full h-3 text-white/90" viewBox="0 0 100 25" preserveAspectRatio="none" fill="currentColor">
+              <path d="M0,25 Q15,10 30,25 Q45,5 65,25 Q80,12 100,25 Z"/>
+            </svg>
+          </div>
+
+          <div id="admin-dn-track-night" class="absolute inset-0 bg-gradient-to-r from-slate-950 via-indigo-950 to-purple-950 transition-opacity duration-500 opacity-0 flex items-end">
+            <div class="absolute inset-0 p-0.5 flex justify-around items-start text-[6px] text-amber-200/90 pointer-events-none">
+              <span class="animate-pulse">✨</span>
+              <span class="animate-pulse">✨</span>
+            </div>
+            <svg class="w-full h-3 text-indigo-900/90" viewBox="0 0 100 25" preserveAspectRatio="none" fill="currentColor">
+              <path d="M0,25 L12,10 L24,25 L40,6 L56,25 L72,12 L85,25 L100,15 L100,25 Z"/>
+            </svg>
+          </div>
+
+          <div id="admin-dn-knob" class="relative z-10 w-5 h-5 rounded-full shadow-md transform transition-all duration-500 flex items-center justify-center text-[10px] overflow-hidden bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 border border-amber-200 text-amber-950 shadow-amber-400/50">
+            <div id="admin-dn-sun-face" class="transition-opacity duration-300 opacity-100">☀️</div>
+            <div id="admin-dn-moon-face" class="absolute transition-opacity duration-300 opacity-0 text-[9px]">🌙</div>
+          </div>
+
+        </button>
+      </div>
+
+      <!-- Exit Logout Button -->
+      <a href="landing.html" onclick="logoutDoctor(event)" title="Déconnexion" class="bg-rose-500/90 hover:bg-rose-600 text-white font-black text-xs px-3.5 py-1.5 rounded-xl shadow-sm transition-all flex items-center gap-1.5 shrink-0 group cursor-pointer">
+        <svg class="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        <span class="hidden sm:inline">Quitter</span>
+      </a>
+
+    </div>
+  </header>
+
+  <!-- ═══════════════════════ MAIN CONTENT CONTAINER ═══════════════════════ -->
+  <main class="flex-1 w-full max-w-[1920px] mx-auto px-4 sm:px-8 lg:px-10 py-6 space-y-6">
+
+    <!-- IMPROVED SEGMENTED TAB NAVIGATION BAR -->
+    <div class="bg-white rounded-3xl p-3 border border-slate-200/80 shadow-sm flex items-center justify-between gap-3 overflow-x-auto no-print">
+      
+      <!-- Primary Modules Segment -->
+      <div class="flex items-center gap-2 shrink-0">
+        <button onclick="switchTab('ordonnance')" id="tab-btn-ordonnance" class="tab-btn active-tab-pill px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-extrabold flex items-center gap-2 transition-all cursor-pointer">
+          <span class="text-sm">📝</span> Ordonnances PCT
+        </button>
+        <button onclick="switchTab('cnam')" id="tab-btn-cnam" class="tab-btn inactive-tab-pill px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer">
+          <span class="text-sm">🏛️</span> Bulletin CNAM C1
+        </button>
+        <button onclick="switchTab('liaison')" id="tab-btn-liaison" class="tab-btn inactive-tab-pill px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer">
+          <span class="text-sm">📩</span> Lettre de Liaison
+        </button>
+      </div>
+
+      <div class="h-6 w-px bg-slate-200 hidden xl:block shrink-0"></div>
+
+      <!-- Secondary Patient / EHR Segment -->
+      <div class="flex items-center gap-2 shrink-0">
+        <button onclick="switchTab('dossier')" id="tab-btn-dossier" class="tab-btn inactive-tab-pill px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer">
+          <span class="text-sm">📁</span> Dossier Médical (EHR)
+        </button>
+        <button onclick="switchTab('messaging')" id="tab-btn-messaging" class="tab-btn inactive-tab-pill px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer">
+          <span class="text-sm">💬</span> WhatsApp & SMS
+        </button>
+      </div>
+
+      <div class="h-6 w-px bg-slate-200 hidden xl:block shrink-0"></div>
+
+      <!-- Management & Cabinet Segment -->
+      <div class="flex items-center gap-2 shrink-0">
+        <button onclick="switchTab('caisse')" id="tab-btn-caisse" class="tab-btn inactive-tab-pill px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer">
+          <span class="text-sm">📊</span> Caisse & Recettes
+        </button>
+        <button onclick="switchTab('agenda')" id="tab-btn-agenda" class="tab-btn inactive-tab-pill px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer">
+          <span class="text-sm">🗓️</span> Agenda & Créneaux
+        </button>
+        <button onclick="switchTab('retard')" id="tab-btn-retard" class="tab-btn inactive-tab-pill px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer">
+          <span class="text-sm">⏱️</span> Retard Cabinet
+        </button>
+        <button onclick="switchTab('cabinet')" id="tab-btn-cabinet" class="tab-btn inactive-tab-pill px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer">
+          <span class="text-sm">🩺</span> Mon Cabinet
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ════════════════ TAB 1: UC-10 ORDONNANCES PCT ════════════════ -->
+    <div id="tab-content-ordonnance" class="tab-panel space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Left Form Card -->
+        <div class="lg:col-span-5 xl:col-span-4 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-sm space-y-6">
+          <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
+            <h3 class="font-extrabold text-base text-[#032b43] flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-teal-50 text-[#00A896] flex items-center justify-center text-sm">📝</span>
+              <span>Rédiger une Ordonnance</span>
+            </h3>
+            <span class="bg-[#00A896] text-white text-xs font-black px-3 py-1 rounded-xl shadow-xs">PCT Tunisie</span>
+          </div>
+
+          <!-- Patient Selection -->
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-700">Sélectionner le Patient :</label>
+            <select id="ord-patient-select" onchange="updateOrdonnancePatient()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs sm:text-sm font-extrabold text-slate-800 outline-none focus:ring-2 focus:ring-[#00A896] focus:bg-white transition-all">
+              <option value="Fatma Ben Abdallah">Fatma Ben Abdallah (CIN: 08849201 · CNAM: CNAM-99014-B)</option>
+              <option value="Sami Mansour">Sami Mansour (52 ans · HTA / Cholestérol)</option>
+              <option value="Kais Saied">Kais Saied (Douleur Thoracique · Urgence)</option>
+              <option value="Leila Ben Ammar">Leila Ben Ammar (Diabète Type 2)</option>
+            </select>
+          </div>
+
+          <!-- PCT Drug Search -->
+          <div class="space-y-4 pt-3 border-t border-slate-100">
+            <label class="block text-xs font-bold text-slate-700">Ajouter Médicament (BDD Pharmacie Centrale PCT) :</label>
+            <div class="relative">
+              <input type="text" id="ord-drug-search" onkeyup="searchPctDrugs()" placeholder="Tapez le nom d'un médicament (ex: Doliprane, Augmentin...)" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs sm:text-sm font-bold text-slate-800 outline-none focus:ring-2 focus:ring-[#00A896] focus:bg-white transition-all">
+              <div id="pct-suggestions" class="hidden absolute left-0 right-0 top-full mt-2 bg-white border border-slate-200 rounded-2xl shadow-2xl z-30 max-h-56 overflow-y-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1">Posologie :</label>
+                <input type="text" id="ord-posology" placeholder="1 cp toutes les 8h" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-bold text-slate-800 outline-none focus:ring-2 focus:ring-[#00A896]">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600 mb-1">Durée :</label>
+                <input type="text" id="ord-duration" placeholder="5 jours" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-bold text-slate-800 outline-none focus:ring-2 focus:ring-[#00A896]">
+              </div>
+            </div>
+
+            <button onclick="addMedicationToOrdonnance()" class="w-full bg-[#00A896] hover:bg-teal-700 text-white font-black py-3.5 px-5 rounded-xl shadow-md shadow-teal-600/20 transition-all text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer">
+              <span>➕ Ajouter à l'Ordonnance</span>
+            </button>
+          </div>
+
+          <div class="space-y-2 pt-3 border-t border-slate-100">
+            <label class="block text-xs font-bold text-slate-700">Consignes & Recommandations :</label>
+            <textarea id="ord-notes" oninput="renderOrdonnancePreview()" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs font-bold text-slate-800 outline-none focus:ring-2 focus:ring-[#00A896]" placeholder="Ex: À prendre au milieu des repas. Repos recommandé 3 jours."></textarea>
+          </div>
+        </div>
+
+        <!-- Right Preview Sheet Card -->
+        <div class="lg:col-span-7 xl:col-span-8 space-y-5">
+          <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-md space-y-8 relative overflow-hidden" id="ordonnance-print-area">
+            
+            <div class="flex items-start justify-between border-b-2 border-[#032b43] pb-6">
+              <div class="space-y-1.5">
+                <h2 class="text-xl sm:text-2xl font-black text-[#032b43] uppercase tracking-wide">Dr. Selim BEN ALI</h2>
+                <p class="text-sm font-extrabold text-[#00A896]">Spécialiste en Cardiologie & Maladies Vasculaires</p>
+                <p class="text-xs text-slate-500 font-medium">Ancien Interne des Hôpitaux de Tunis · N° Ordre des Médecins: 14092</p>
+                <p class="text-xs text-slate-500 font-medium">📍 Av. Hédi Nouira, Ennasr 2, 2037 Tunis — 📞 +216 71 830 120</p>
+              </div>
+
+              <div class="text-right space-y-2">
+                <span class="bg-[#032b43] text-white text-xs font-black px-4 py-2 rounded-xl uppercase tracking-wider shadow-xs inline-block">ORDONNANCE MÉDICALE</span>
+                <p class="text-sm font-bold text-slate-700 pt-1" id="ord-preview-date">Date: 15/08/2026</p>
+              </div>
+            </div>
+
+            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 flex items-center justify-between text-xs sm:text-sm">
+              <div>
+                <span class="text-slate-500 font-medium">Ordonnance établie pour :</span>
+                <h4 class="text-base sm:text-lg font-black text-[#032b43]" id="ord-preview-patient">Fatma Ben Abdallah</h4>
+              </div>
+              <div class="text-right">
+                <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-extrabold px-4 py-1.5 rounded-full">Prise en charge CNAM (Filière Privée)</span>
+              </div>
+            </div>
+
+            <div class="space-y-5 py-3">
+              <div class="text-4xl font-black text-[#032b43] font-serif tracking-widest">Rx</div>
+              <div id="ord-meds-list" class="space-y-4 pl-6 text-sm"></div>
+              <div id="ord-preview-notes-box" class="mt-6 pt-4 border-t border-slate-200 text-xs sm:text-sm text-slate-600 font-medium italic">
+                📌 Consignes Médicales: <span id="ord-preview-notes-text">À prendre au milieu des repas.</span>
+              </div>
+            </div>
+
+            <div class="border-t-2 border-slate-200 pt-6 flex items-end justify-between">
+              <div class="space-y-2">
+                <div class="w-20 h-20 bg-slate-50 border border-slate-300 rounded-2xl flex items-center justify-center text-[10px] font-mono text-slate-600 text-center leading-tight">
+                  QR-PCT<br>HASH-8891<br>AUTHENTIFIÉ
+                </div>
+                <p class="text-[10px] text-slate-400 font-medium">Signature Électronique Certifiée PCT Tunisie</p>
+              </div>
+
+              <div class="border-2 border-dashed border-[#032b43] p-4 sm:p-5 rounded-2xl text-center space-y-1 bg-cyan-50/50 min-w-[220px]">
+                <p class="text-xs font-black text-[#032b43] uppercase">CACHET & SIGNATURE DU PRATICIEN</p>
+                <p class="text-xs font-bold text-[#00A896]">Dr. Selim BEN ALI · Cardiologue</p>
+                <p class="text-[10px] text-slate-500 font-mono">Code CNAM: CNAM-CD-40912</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="flex items-center gap-4 no-print">
+            <button onclick="window.print()" class="flex-1 bg-[#032b43] hover:bg-slate-900 text-white font-black py-3.5 px-6 rounded-xl shadow-md transition-all text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer">
+              <span>🖨️ Imprimer Ordonnance</span>
+            </button>
+            <button onclick="sendOrdonnanceWhatsApp()" class="flex-1 bg-[#00A896] hover:bg-teal-700 text-white font-black py-3.5 px-6 rounded-xl shadow-md shadow-teal-600/20 transition-all text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer">
+              <span>📱 Envoyer par WhatsApp</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ════════════════ TAB 2: UC-11 BULLETIN CNAM C1 ════════════════ -->
+    <div id="tab-content-cnam" class="tab-panel hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <div class="lg:col-span-5 xl:col-span-4 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs space-y-6">
+          <div class="border-b border-slate-100 pb-4">
+            <h3 class="font-extrabold text-base text-[#032b43] flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm">🏛️</span>
+              <span>Éditer Bulletin CNAM (C1)</span>
+            </h3>
+            <p class="text-xs text-slate-500 mt-1">Caisse Nationale d'Assurance Maladie — Filière Privée</p>
+          </div>
+
+          <div class="space-y-4 text-xs sm:text-sm">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1.5">Nom de l'Assuré(e) Social(e) :</label>
+              <input type="text" id="cnam-inp-patient" value="Fatma Ben Abdallah" oninput="renderCnamSheet()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 font-bold text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-700 mb-1.5">N° Identifiant Unique Carnet CNAM :</label>
+              <input type="text" id="cnam-inp-carnet" value="CNAM-99014-B" oninput="renderCnamSheet()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 font-mono font-bold text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-700 mb-1.5">Code Acte & Honoraires :</label>
+              <select id="cnam-inp-acte" onchange="renderCnamSheet()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 font-extrabold text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500">
+                <option value="70">C1 — Consultation Spécialiste Cardiologie (70 TND)</option>
+                <option value="65">C1 — Consultation Pédiatrie (65 TND)</option>
+                <option value="50">C1 — Consultation Généraliste (50 TND)</option>
+              </select>
+            </div>
+
+            <div class="bg-emerald-50/70 p-5 rounded-2xl border border-emerald-200 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-600 font-bold">Part Prise en Charge CNAM (70%) :</span>
+                <span class="font-black text-emerald-700 text-base" id="cnam-calc-part">49 TND</span>
+              </div>
+              <div class="flex items-center justify-between border-t border-emerald-200/60 pt-2.5">
+                <span class="text-slate-600 font-bold">Ticket Modérateur Patient (30%) :</span>
+                <span class="font-black text-slate-900 text-base" id="cnam-calc-ticket">21 TND</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 xl:col-span-8 space-y-5">
+          <div class="bg-white p-8 sm:p-10 rounded-3xl border-2 border-emerald-600 shadow-xl space-y-8 relative">
+            <div class="flex items-start justify-between border-b-2 border-emerald-600 pb-5">
+              <div>
+                <h3 class="text-xl font-black text-emerald-800 uppercase tracking-wide">RÉPUBLIQUE TUNISIENNE — CNAM</h3>
+                <p class="text-sm font-extrabold text-slate-700">Caisse Nationale d'Assurance Maladie</p>
+                <p class="text-xs text-slate-500 font-bold">BULLETIN DE SOINS & DÉCOMPTE D'HONORAIRES (C1)</p>
+              </div>
+              <div class="text-right">
+                <span class="bg-emerald-600 text-white text-xs font-black px-4 py-1.5 rounded-xl shadow-xs">FILIÈRE PRIVÉE</span>
+                <p class="text-xs font-mono font-bold text-slate-700 pt-1.5">BS-88914-2026</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6 bg-slate-50 p-5 rounded-2xl border border-slate-200 text-xs sm:text-sm">
+              <div>
+                <span class="text-slate-500 font-medium">Praticien Soignant:</span>
+                <p class="font-bold text-slate-900 text-base">Dr. Selim BEN ALI (Cardiologie)</p>
+                <p class="text-xs text-slate-500">Code Médecin: CNAM-CD-40912</p>
+              </div>
+              <div>
+                <span class="text-slate-500 font-medium">Assuré Bénéficiaire:</span>
+                <p class="font-bold text-slate-900 text-base" id="cnam-sheet-patient">Fatma Ben Abdallah</p>
+                <p class="text-xs font-mono text-emerald-700 font-bold" id="cnam-sheet-carnet">N° CNAM-99014-B</p>
+              </div>
+            </div>
+
+            <table class="w-full text-xs sm:text-sm border border-slate-200 text-left rounded-2xl overflow-hidden">
+              <thead class="bg-slate-100 text-slate-700 font-extrabold uppercase text-xs">
+                <tr>
+                  <th class="p-4 border-b border-slate-200">Date Acte</th>
+                  <th class="p-4 border-b border-slate-200">Code Acte</th>
+                  <th class="p-4 border-b border-slate-200 text-right">Honoraires</th>
+                  <th class="p-4 border-b border-slate-200 text-right">Part CNAM (70%)</th>
+                </tr>
+              </thead>
+              <tbody class="font-bold text-sm">
+                <tr class="border-b border-slate-100">
+                  <td class="p-4">15/08/2026</td>
+                  <td class="p-4">C1 (Consultation Spécialiste)</td>
+                  <td class="p-4 text-right" id="cnam-sheet-fee">70 TND</td>
+                  <td class="p-4 text-right text-emerald-700 font-black text-base" id="cnam-sheet-part">49 TND</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="flex items-center justify-between pt-6 border-t border-slate-200">
+              <div class="font-mono text-sm text-slate-600 font-bold tracking-widest">
+                ||| || ||||| |||| || ||||| |||||||
+                <span class="block text-xs text-slate-400 font-normal">BARCODE-TELETRANSMISSION-CNAM</span>
+              </div>
+              <div class="border border-slate-300 p-4 rounded-2xl text-center text-xs font-bold text-slate-700 bg-slate-50 min-w-[200px]">
+                Signature & Cachet Médecin
+              </div>
+            </div>
+          </div>
+
+          <button onclick="window.print()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3.5 px-6 rounded-xl shadow-md transition-all text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer no-print">
+            <span>🖨️ Imprimer Bulletin de Soins CNAM</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ════════════════ TAB 3: UC-12 LETTRE DE LIAISON ════════════════ -->
+    <div id="tab-content-liaison" class="tab-panel hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <div class="lg:col-span-5 xl:col-span-4 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs space-y-6">
+          <div class="border-b border-slate-100 pb-4">
+            <h3 class="font-extrabold text-base text-[#032b43] flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm">📩</span>
+              <span>Lettre de Liaison / Orientation</span>
+            </h3>
+            <p class="text-xs text-slate-500 mt-1">Correspondance médicale inter-confrères</p>
+          </div>
+
+          <div class="space-y-4 text-xs sm:text-sm">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1.5">Médecin Confrère Destinataire :</label>
+              <select id="liaison-inp-doc" onchange="renderLiaisonLetter()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 font-extrabold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-500">
+                <option value="Dr. Meriem Karray (Pédiatre · Lac 2 Tunis)">Dr. Meriem Karray (Pédiatre · Lac 2 Tunis)</option>
+                <option value="Dr. Mohamed Triki (Cardiologue · Sfax)">Dr. Mohamed Triki (Cardiologue · Sfax)</option>
+                <option value="Clinique Pasteur (Service Imagerie / Scanner 3D)">Clinique Pasteur (Imagerie / Scanner 3D)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-700 mb-1.5">Patient Concerné :</label>
+              <input type="text" id="liaison-inp-patient" value="Fatma Ben Abdallah" oninput="renderLiaisonLetter()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 font-bold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-700 mb-1.5">Motif d'Orientation & Résumé Clinique :</label>
+              <textarea id="liaison-inp-body" oninput="renderLiaisonLetter()" rows="6" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 font-medium text-slate-800 outline-none focus:ring-2 focus:ring-indigo-500">Cher(e) Confrère, Je vous adresse la patiente Fatma Ben Abdallah pour avis spécialisé et bilan biologique complémentaire. L'examen cardiologique retrouve une tension modérément élevée (14/9). Je vous remercie par avance pour votre prise en charge attentive.</textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 xl:col-span-8 space-y-5">
+          <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-md space-y-8 relative">
+            <div class="border-b-2 border-[#032b43] pb-5">
+              <h2 class="text-xl font-black text-[#032b43] uppercase tracking-wide">Dr. Selim BEN ALI — Cardiologie</h2>
+              <p class="text-xs text-slate-500 font-medium">Cabinet Ennasr 2 Tunis · Tel: +216 71 830 120</p>
+            </div>
+
+            <div class="flex items-center justify-between text-xs sm:text-sm">
+              <span class="font-bold text-slate-700">À l'attention de : <strong id="liaison-letter-doc" class="text-base text-[#032b43]">Dr. Meriem Karray</strong></span>
+              <span class="text-slate-500 font-bold">Tunis, le 15/08/2026</span>
+            </div>
+
+            <div class="space-y-4 text-xs sm:text-sm text-slate-800 leading-relaxed font-medium pt-2">
+              <p class="font-bold text-slate-900 text-base">Concerne: <span id="liaison-letter-patient" class="text-[#00A896]">Fatma Ben Abdallah</span></p>
+              <p id="liaison-letter-body" class="whitespace-pre-line bg-slate-50 p-6 rounded-2xl border border-slate-200 text-sm leading-relaxed">
+                Cher(e) Confrère, Je vous adresse la patiente Fatma Ben Abdallah...
+              </p>
+            </div>
+
+            <div class="pt-8 text-right space-y-1">
+              <p class="text-xs font-black text-[#032b43] uppercase">Confraternellement,</p>
+              <p class="text-sm font-bold text-[#00A896]">Dr. Selim BEN ALI</p>
+            </div>
+          </div>
+
+          <button onclick="window.print()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black py-3.5 px-6 rounded-xl shadow-md transition-all text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer no-print">
+            <span>🖨️ Imprimer Lettre de Liaison</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ════════════════ NEW FEATURE 2: DOSSIER MEDICAL PATIENT (EHR) ════════════════ -->
+    <div id="tab-content-dossier" class="tab-panel hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <div class="lg:col-span-4 xl:col-span-4 bg-white p-7 rounded-3xl border border-slate-200/80 shadow-xs space-y-5">
+          <h3 class="font-extrabold text-base text-[#032b43] flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-xl bg-teal-50 text-[#00A896] flex items-center justify-center text-sm">📁</span>
+            <span>Sélectionner Dossier Patient</span>
+          </h3>
+          <select id="ehr-patient-select" onchange="renderEhrDetails()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs sm:text-sm font-extrabold text-slate-800 outline-none focus:ring-2 focus:ring-[#00A896]">
+            <option value="Sami Mansour">Sami Mansour (52 ans · HTA / Cholestérol)</option>
+            <option value="Fatma Ben Abdallah">Fatma Ben Abdallah (38 ans · Suivi Cardiaque)</option>
+          </select>
+
+          <div id="ehr-summary-card" class="bg-teal-50/70 p-6 rounded-2xl border border-teal-200 space-y-3 text-xs sm:text-sm">
+            <h4 class="font-black text-[#032b43] text-lg" id="ehr-card-name">Sami Mansour</h4>
+            <p class="text-slate-600 font-medium">Âge / Sexe: <strong id="ehr-card-age" class="text-slate-900 font-bold">52 ans (Homme)</strong></p>
+            <p class="text-slate-600 font-medium">Groupe Sanguin: <strong class="text-rose-600 font-black text-base" id="ehr-card-blood">A+</strong></p>
+            <p class="text-slate-600 font-medium">N° Carnet CNAM: <strong class="font-mono text-[#00A896] font-bold" id="ehr-card-cnam">CNAM-44910-A</strong></p>
+          </div>
+        </div>
+
+        <div class="lg:col-span-8 xl:col-span-8 bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-xs space-y-8">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+            <h3 class="font-extrabold text-lg text-[#032b43]">📋 Historique Médical & Bilan Clinique</h3>
+            <span class="bg-emerald-50 text-emerald-700 text-xs font-bold px-4 py-1.5 rounded-full border border-emerald-200">Dossier Actif INPDP</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs sm:text-sm">
+            <div class="bg-rose-50 p-5 rounded-2xl border border-rose-200 space-y-1.5">
+              <h4 class="font-black text-rose-800 flex items-center gap-2 text-base">⚠️ Allergies Connues :</h4>
+              <p class="font-bold text-rose-700 text-base" id="ehr-allergies">Pénicilline, Pollen</p>
+            </div>
+            <div class="bg-amber-50 p-5 rounded-2xl border border-amber-200 space-y-1.5">
+              <h4 class="font-black text-amber-800 flex items-center gap-2 text-base">🩺 Antécédents Pathologiques :</h4>
+              <p class="font-bold text-amber-700 text-base" id="ehr-antecedents">Hypertension Artérielle (HTA), Hypercholestérolémie</p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <h4 class="font-extrabold text-xs text-slate-800 uppercase tracking-wider">Historique des Consultations & Examens :</h4>
+            <div id="ehr-timeline" class="space-y-3"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ════════════════ NEW FEATURE 1: CAISSE & REVENUE DASHBOARD ════════════════ -->
+    <div id="tab-content-caisse" class="tab-panel hidden space-y-6">
+      
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="bg-white p-7 rounded-3xl border border-slate-200/80 shadow-xs space-y-2">
+          <span class="text-xs text-slate-500 font-bold uppercase tracking-wider">Recettes Totales du Jour</span>
+          <h3 class="text-4xl font-black text-emerald-600">840 TND</h3>
+          <p class="text-xs text-slate-500 font-semibold">12 Consultations effectuées aujourd'hui</p>
+        </div>
+        <div class="bg-white p-7 rounded-3xl border border-slate-200/80 shadow-xs space-y-2">
+          <span class="text-xs text-slate-500 font-bold uppercase tracking-wider">Règlements Directs Espèces / Carte</span>
+          <h3 class="text-4xl font-black text-[#032b43]">252 TND</h3>
+          <p class="text-xs text-slate-500 font-semibold">Encaissements Secrétariat en Caisse</p>
+        </div>
+        <div class="bg-white p-7 rounded-3xl border border-slate-200/80 shadow-xs space-y-2">
+          <span class="text-xs text-slate-500 font-bold uppercase tracking-wider">Remboursements CNAM en Attente (70%)</span>
+          <h3 class="text-4xl font-black text-[#00A896]">588 TND</h3>
+          <p class="text-xs text-slate-500 font-semibold">En cours de virement par la CNAM Tunis</p>
+        </div>
+      </div>
+
+      <div class="bg-white p-7 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs space-y-5">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+          <h3 class="font-extrabold text-lg text-[#032b43]">📊 Journal de Caisse & Règlements Praticien</h3>
+          <button onclick="alert('📊 Journal de caisse exporté au format Excel / PDF')" class="bg-[#00A896] hover:bg-teal-700 text-white font-black text-xs sm:text-sm px-5 py-2.5 rounded-xl transition-all shadow-md shadow-teal-600/20">Exporter Caisse</button>
+        </div>
+
+        <table class="w-full text-xs sm:text-sm text-left rounded-2xl overflow-hidden">
+          <thead class="bg-slate-100 text-slate-700 font-extrabold uppercase text-xs">
+            <tr>
+              <th class="p-4">Heure</th>
+              <th class="p-4">Patient</th>
+              <th class="p-4">Acte</th>
+              <th class="p-4">Mode Reg</th>
+              <th class="p-4 text-right">Part Patient</th>
+              <th class="p-4 text-right">Part CNAM</th>
+            </tr>
+          </thead>
+          <tbody class="font-bold divide-y divide-slate-100 text-sm">
+            <tr class="hover:bg-slate-50">
+              <td class="p-4">09:15</td>
+              <td class="p-4 font-extrabold text-slate-900">Fatma Ben Abdallah</td>
+              <td class="p-4 text-slate-700">C1 Consultation Cardiologie</td>
+              <td class="p-4 text-emerald-700 font-extrabold">Espèces</td>
+              <td class="p-4 text-right">21 TND</td>
+              <td class="p-4 text-right text-[#00A896] font-black text-base">49 TND</td>
+            </tr>
+            <tr class="hover:bg-slate-50">
+              <td class="p-4">10:00</td>
+              <td class="p-4 font-extrabold text-slate-900">Sami Mansour</td>
+              <td class="p-4 text-slate-700">C1 + Échocardiographie 4D</td>
+              <td class="p-4 text-emerald-700 font-extrabold">Chèque</td>
+              <td class="p-4 text-right">30 TND</td>
+              <td class="p-4 text-right text-[#00A896] font-black text-base">70 TND</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- ════════════════ NEW FEATURE 4: WHATSAPP & SMS MESSENGER ════════════════ -->
+    <div id="tab-content-messaging" class="tab-panel hidden space-y-6">
+      <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-xs space-y-6 w-full">
+        <div class="border-b border-slate-100 pb-4">
+          <h3 class="font-extrabold text-lg text-[#032b43] flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base">💬</span>
+            <span>Patient WhatsApp & SMS Messenger</span>
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">Envoyez des consignes, rappels GPS et notifications aux patients.</p>
+        </div>
+
+        <div class="space-y-5 text-xs sm:text-sm">
+          <div>
+            <label class="block font-bold text-slate-700 mb-2">Sélectionner un Modèle de Message WhatsApp :</label>
+            <select id="msg-template-select" onchange="applyWhatsAppTemplate()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 font-extrabold text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500">
+              <option value="rappel">📱 Rappel RDV avec Localisation GPS Cabinet</option>
+              <option value="resultats">🔬 Notification Résultats d'Analyses Prêts</option>
+              <option value="consignes">⚠️ Consignes Pré-Consultation (À jeun)</option>
+              <option value="conges">🏖️ Annonce Congés Annuels du Cabinet</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-2">Aperçu du Message Transmis :</label>
+            <textarea id="msg-text-area" rows="6" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-5 font-medium text-slate-800 outline-none focus:ring-2 focus:ring-emerald-500 text-sm leading-relaxed"></textarea>
+          </div>
+
+          <button onclick="dispatchWhatsAppMessage()" class="w-full bg-[#00A896] hover:bg-teal-700 text-white font-black py-4 px-6 rounded-xl shadow-md shadow-teal-600/20 transition-all text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer">
+            <span>📱 Transmettre par WhatsApp Web</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════ NEW FEATURE 5: AGENDA INTERACTIF ════════════════ -->
+    <div id="tab-content-agenda" class="tab-panel hidden space-y-6">
+      <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-xs space-y-6 w-full">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+          <div>
+            <h3 class="font-extrabold text-lg text-[#032b43]">🗓️ Agenda Interactif & Gestion des Créneaux</h3>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">Synchronisé en temps réel avec le Secrétariat (`secretaire.html`)</p>
+          </div>
+          <button onclick="alert('⚡ Créneau bloqué avec succès pour Urgence Médicale !')" class="bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl transition-all shadow-xs">⚡ Bloquer un Créneau</button>
+        </div>
+
+        <div class="grid grid-cols-5 gap-4 text-center text-xs sm:text-sm">
+          <div class="bg-slate-100 p-4 rounded-2xl font-black text-slate-800">Lundi 15</div>
+          <div class="bg-slate-100 p-4 rounded-2xl font-black text-slate-800">Mardi 16</div>
+          <div class="bg-slate-100 p-4 rounded-2xl font-black text-slate-800">Mercredi 17</div>
+          <div class="bg-slate-100 p-4 rounded-2xl font-black text-slate-800">Jeudi 18</div>
+          <div class="bg-slate-100 p-4 rounded-2xl font-black text-slate-800">Vendredi 19</div>
+
+          <!-- Slots -->
+          <div class="bg-teal-50 text-[#00A896] border border-teal-200 p-4 rounded-2xl font-bold">09:00 · Fatma Ben A.</div>
+          <div class="bg-teal-50 text-[#00A896] border border-teal-200 p-4 rounded-2xl font-bold">09:30 · Sami M.</div>
+          <div class="bg-teal-50 text-[#00A896] border border-teal-200 p-4 rounded-2xl font-bold">10:00 · Kais Saied</div>
+          <div class="bg-rose-50 text-rose-700 border border-rose-200 p-4 rounded-2xl font-bold">11:00 · BLOQUÉ URG</div>
+          <div class="bg-teal-50 text-[#00A896] border border-teal-200 p-4 rounded-2xl font-bold">14:00 · Leila B.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════ TAB 4: UC-9 SIGNALER RETARD ════════════════ -->
+    <div id="tab-content-retard" class="tab-panel hidden space-y-6">
+      <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-xs space-y-6 w-full">
+        <div class="border-b border-slate-100 pb-4">
+          <h3 class="font-extrabold text-lg text-[#032b43] flex items-center gap-3">
+            <span>⏱️ UC-9: Signaler un Retard de Consultation au Cabinet</span>
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">Diffusez un signalement de retard immédiat aux secrétaires et aux patients en salle d'attente virtuelle.</p>
+        </div>
+
+        <div class="space-y-5">
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Sélectionnez la durée du retard accusé :</label>
+          
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-5">
+            <button onclick="triggerCabinetDelay(15)" class="bg-amber-50 hover:bg-amber-500 hover:text-white border border-amber-200 text-amber-900 font-black p-5 sm:p-6 rounded-3xl text-center transition-all cursor-pointer">
+              <span class="block text-2xl sm:text-3xl">+15 min</span>
+              <span class="text-xs font-medium opacity-80">Léger retard</span>
+            </button>
+            <button onclick="triggerCabinetDelay(30)" class="bg-orange-50 hover:bg-orange-500 hover:text-white border border-orange-200 text-orange-900 font-black p-5 sm:p-6 rounded-3xl text-center transition-all cursor-pointer">
+              <span class="block text-2xl sm:text-3xl">+30 min</span>
+              <span class="text-xs font-medium opacity-80">Retard moyen</span>
+            </button>
+            <button onclick="triggerCabinetDelay(45)" class="bg-rose-50 hover:bg-rose-500 hover:text-white border border-rose-200 text-rose-900 font-black p-5 sm:p-6 rounded-3xl text-center transition-all cursor-pointer">
+              <span class="block text-2xl sm:text-3xl">+45 min</span>
+              <span class="text-xs font-medium opacity-80">Urgence chirurgicale</span>
+            </button>
+            <button onclick="resetCabinetDelay()" class="bg-emerald-50 hover:bg-emerald-600 hover:text-white border border-emerald-200 text-emerald-900 font-black p-5 sm:p-6 rounded-3xl text-center transition-all cursor-pointer">
+              <span class="block text-2xl sm:text-3xl">✓ À l'heure</span>
+              <span class="text-xs font-medium opacity-80">Aucun retard</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="delay-status-box" class="bg-slate-50 p-5 rounded-2xl border border-slate-200 text-xs sm:text-sm font-medium text-slate-700 space-y-1.5">
+          <p>Status actuel: <strong class="text-emerald-700 text-base" id="delay-status-text">🟢 Le cabinet fonctionne à l'heure exacte.</strong></p>
+          <p class="text-xs text-slate-500">Dernière mise à jour transmise au Secrétariat: Aujourd'hui à 10:55</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════ TAB 5: UC-8 MON CABINET MEDICAL ════════════════ -->
+    <div id="tab-content-cabinet" class="tab-panel hidden space-y-6">
+      <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-xs space-y-6 w-full">
+        <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
+          <div>
+            <h3 class="font-extrabold text-lg text-[#032b43]">🩺 UC-8: Profil & Configuration du Cabinet Médical</h3>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">Paramètres de la fiche praticien sur SahaTN</p>
+          </div>
+          <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold px-4 py-1.5 rounded-full">Abonnement Actif PRO</span>
+        </div>
+
+        <div class="space-y-5 text-xs sm:text-sm">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1.5">Nom du Praticien :</label>
+              <input type="text" value="Dr. Selim Ben Ali" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 font-bold text-slate-800 outline-none">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1.5">Spécialité Principale :</label>
+              <input type="text" value="Cardiologie & Maladies Vasculaires" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 font-bold text-slate-800 outline-none">
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1.5">Adresse complète du Cabinet :</label>
+            <input type="text" value="Avenue Hédi Nouira, Résidence Les Palmiers, Bloc B, Ennasr 2, 2037 Tunis" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 font-bold text-slate-800 outline-none">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1.5">N° Inscription Ordre des Médecins :</label>
+              <input type="text" value="N° 14092" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 font-mono font-bold text-slate-800 outline-none">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1.5">Code Filière Privée CNAM :</label>
+              <input type="text" value="CNAM-CD-40912" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 font-mono font-bold text-[#00A896] outline-none">
+            </div>
+          </div>
+
+          <button onclick="alert('💾 Profil du Cabinet mis à jour avec succès sur SahaTN !')" class="w-full bg-[#032b43] hover:bg-slate-900 text-white font-extrabold py-4 px-6 rounded-xl shadow-md transition-all text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer">
+            <span>💾 Enregistrer les Modifications du Cabinet</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ════════════════ SCRIPTS LOGIC ════════════════ -->
+  <script src="js/data.js" onerror="this.onerror=null; this.src='../js/data.js';"></script>
+  <script>
+    let ordMedications = [
+      { name: 'Doliprane 1000 mg', posology: '1 comprimé toutes les 8h si douleur', duration: '5 jours' },
+      { name: 'Inexium 40 mg', posology: '1 comprimé le matin à jeun', duration: '14 jours' }
+    ];
+
+    const sampleEhrs = {
+      'Sami Mansour': {
+        age: '52 ans (Homme)',
+        blood: 'A+',
+        cnam: 'CNAM-44910-A',
+        allergies: 'Pénicilline, Pollen',
+        antecedents: 'Hypertension Artérielle (HTA), Hypercholestérolémie',
+        timeline: [
+          { date: '01/08/2026', title: 'Bilan Lipidique & Glycémie à Jeun (Laboratoire Pasteur)' },
+          { date: '15/05/2026', title: 'Holter Tensionnel MAPA 24h (Tension 13/8)' }
+        ]
+      },
+      'Fatma Ben Abdallah': {
+        age: '38 ans (Femme)',
+        blood: 'O+',
+        cnam: 'CNAM-99014-B',
+        allergies: 'Aucune allergie connue',
+        antecedents: 'Palpitations occasionnelles, Suivi cardiologique',
+        timeline: [
+          { date: '14/08/2026', title: 'Échocardiographie 4D (Cabinet Dr. Ben Ali)' }
+        ]
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (localStorage.getItem('sahatn_theme') === 'dark' || localStorage.getItem('sahatn_admin_theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+        updateAdminDayNightSwitchUI(true);
+      }
+
+      renderOrdonnancePreview();
+      renderCnamSheet();
+      renderLiaisonLetter();
+      renderEhrDetails();
+      applyWhatsAppTemplate();
+    });
+
+    function toggleDocNotifDropdown() {
+      const menu = document.getElementById('doc-notif-menu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    function clearDocNotifications() {
+      if (window.SahaTNNotif) {
+        window.SahaTNNotif.clearSpace('doctor');
+      }
+    }
+
+    // Close dropdown on outside click
+    document.addEventListener('click', (e) => {
+      const btn = document.getElementById('doc-notif-bell-btn');
+      const menu = document.getElementById('doc-notif-menu');
+      if (menu && btn && !btn.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.add('hidden');
+      }
+    });
+
+    function toggleAdminDayNightTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('sahatn_theme', isDark ? 'dark' : 'light');
+      localStorage.setItem('sahatn_admin_theme', isDark ? 'dark' : 'light');
+      updateAdminDayNightSwitchUI(isDark);
+    }
+
+    function updateAdminDayNightSwitchUI(isDark) {
+      const trackSky = document.getElementById('admin-dn-track-sky');
+      const trackNight = document.getElementById('admin-dn-track-night');
+      const knob = document.getElementById('admin-dn-knob');
+      const sunIcon = document.getElementById('admin-dn-sun-face');
+      const moonIcon = document.getElementById('admin-dn-moon-face');
+
+      if (!knob) return;
+
+      if (isDark) {
+        if (trackSky) trackSky.style.opacity = '0';
+        if (trackNight) trackNight.style.opacity = '1';
+        knob.style.transform = 'translateX(1.75rem)';
+        knob.className = 'relative z-10 w-5 h-5 rounded-full shadow-md transform transition-all duration-500 flex items-center justify-center text-[10px] overflow-hidden bg-gradient-to-br from-indigo-900 via-slate-800 to-slate-950 border border-indigo-400/50 text-indigo-200 shadow-indigo-500/50';
+        if (sunIcon) sunIcon.style.opacity = '0';
+        if (moonIcon) moonIcon.style.opacity = '1';
+      } else {
+        if (trackSky) trackSky.style.opacity = '1';
+        if (trackNight) trackNight.style.opacity = '0';
+        knob.style.transform = 'translateX(0rem)';
+        knob.className = 'relative z-10 w-5 h-5 rounded-full shadow-md transform transition-all duration-500 flex items-center justify-center text-[10px] overflow-hidden bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 border border-amber-200 text-amber-950 shadow-amber-400/50';
+        if (sunIcon) sunIcon.style.opacity = '1';
+        if (moonIcon) moonIcon.style.opacity = '0';
+      }
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('active-tab-pill');
+        b.classList.add('inactive-tab-pill');
+      });
+
+      const activePanel = document.getElementById(`tab-content-${tabId}`);
+      const activeTabBtn = document.getElementById(`tab-btn-${tabId}`);
+
+      if (activePanel) activePanel.classList.remove('hidden');
+      if (activeTabBtn) {
+        activeTabBtn.classList.add('active-tab-pill');
+        activeTabBtn.classList.remove('inactive-tab-pill');
+      }
+    }
+
+    function renderEhrDetails() {
+      const p = document.getElementById('ehr-patient-select')?.value || 'Sami Mansour';
+      const data = sampleEhrs[p] || sampleEhrs['Sami Mansour'];
+
+      document.getElementById('ehr-card-name').textContent = p;
+      document.getElementById('ehr-card-age').textContent = data.age;
+      document.getElementById('ehr-card-blood').textContent = data.blood;
+      document.getElementById('ehr-card-cnam').textContent = data.cnam;
+
+      document.getElementById('ehr-allergies').textContent = data.allergies;
+      document.getElementById('ehr-antecedents').textContent = data.antecedents;
+
+      const container = document.getElementById('ehr-timeline');
+      if (container) {
+        container.innerHTML = data.timeline.map(item => `
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs sm:text-sm font-bold text-slate-800 flex justify-between items-center hover:bg-white transition-all">
+            <span>📅 ${item.date} — ${item.title}</span>
+            <button onclick="alert('📄 Consultation du document médical en cours...')" class="bg-teal-50 text-[#00A896] hover:bg-[#00A896] hover:text-white px-4 py-1.5 rounded-xl text-xs font-extrabold transition-all">Voir Document 👁️</button>
+          </div>
+        `).join('');
+      }
+    }
+
+    function applyWhatsAppTemplate() {
+      const t = document.getElementById('msg-template-select')?.value || 'rappel';
+      const area = document.getElementById('msg-text-area');
+      if (!area) return;
+
+      if (t === 'rappel') {
+        area.value = `Bonjour, rappel de votre consultation aujourd'hui avec le Dr. Selim Ben Ali.\n📍 Cabinet Ennasr 2 Tunis (Avenue Hédi Nouira).\n🗺️ GPS: https://maps.google.com/?q=36.85,10.16`;
+      } else if (t === 'resultats') {
+        area.value = `Bonjour, vos résultats d'analyses et de bilan cardiologique sont disponibles au secrétariat du cabinet.`;
+      } else if (t === 'consignes') {
+        area.value = `Rappel SahaTN: Merci d'arriver 10 minutes avant l'heure fixée et d'apporter vos anciens examens et votre carnet CNAM.`;
+      } else if (t === 'conges') {
+        area.value = `Information SahaTN: Le cabinet du Dr. Selim Ben Ali sera fermé pour congés annuels du 20 au 25 août.`;
+      }
+    }
+
+    function dispatchWhatsAppMessage() {
+      const msg = encodeURIComponent(document.getElementById('msg-text-area')?.value || '');
+      window.open(`https://wa.me/?text=${msg}`, '_blank');
+    }
+
+    function searchPctDrugs() {
+      const query = document.getElementById('ord-drug-search')?.value.toLowerCase().trim() || '';
+      const container = document.getElementById('pct-suggestions');
+      if (!container) return;
+
+      if (!query) {
+        container.classList.add('hidden');
+        return;
+      }
+
+      const sampleDrugs = [
+        { name: 'Doliprane 1000 mg', pos: '1 cp toutes les 8h' },
+        { name: 'Augmentin 1 g', pos: '1 cp 2 fois par jour' },
+        { name: 'Inexium 40 mg', pos: '1 cp le matin à jeun' },
+        { name: 'Solupred 20 mg', pos: '2 cp le matin' },
+        { name: 'Spasfon 80 mg', pos: '2 cp en cas de crise' },
+        { name: 'Tahor 20 mg', pos: '1 cp le soir' }
+      ];
+
+      const matches = sampleDrugs.filter(d => d.name.toLowerCase().includes(query));
+      if (matches.length === 0) {
+        container.classList.add('hidden');
+        return;
+      }
+
+      container.innerHTML = matches.map(m => `
+        <div onclick="selectPctDrug('${m.name}', '${m.pos}')" class="p-3.5 hover:bg-teal-50 cursor-pointer border-b border-slate-100 text-xs sm:text-sm font-bold text-slate-800 flex justify-between">
+          <span>${m.name}</span>
+          <span class="text-xs text-teal-600">${m.pos}</span>
+        </div>
+      `).join('');
+      container.classList.remove('hidden');
+    }
+
+    function selectPctDrug(name, pos) {
+      document.getElementById('ord-drug-search').value = name;
+      document.getElementById('ord-posology').value = pos;
+      document.getElementById('ord-duration').value = '7 jours';
+      document.getElementById('pct-suggestions').classList.add('hidden');
+    }
+
+    function addMedicationToOrdonnance() {
+      const name = document.getElementById('ord-drug-search')?.value.trim();
+      const posology = document.getElementById('ord-posology')?.value.trim() || '1 comprimé par jour';
+      const duration = document.getElementById('ord-duration')?.value.trim() || '5 jours';
+
+      if (!name) {
+        alert('⚠️ Veuillez sélectionner ou saisir le nom d\'un médicament.');
+        return;
+      }
+
+      ordMedications.push({ name, posology, duration });
+      document.getElementById('ord-drug-search').value = '';
+      document.getElementById('ord-posology').value = '';
+      document.getElementById('ord-duration').value = '';
+
+      renderOrdonnancePreview();
+    }
+
+    function removeMedication(idx) {
+      ordMedications.splice(idx, 1);
+      renderOrdonnancePreview();
+    }
+
+    function updateOrdonnancePatient() {
+      const p = document.getElementById('ord-patient-select')?.value;
+      const el = document.getElementById('ord-preview-patient');
+      if (el) el.textContent = p;
+    }
+
+    function renderOrdonnancePreview() {
+      const container = document.getElementById('ord-meds-list');
+      if (!container) return;
+
+      container.innerHTML = ordMedications.map((m, idx) => `
+        <div class="flex items-start justify-between gap-3 text-xs sm:text-sm border-b border-slate-100 pb-3">
+          <div>
+            <h5 class="font-extrabold text-[#032b43] text-base">• ${m.name}</h5>
+            <p class="text-slate-600 font-medium">${m.posology} — <span class="text-[#00A896] font-bold">Pendant ${m.duration}</span></p>
+          </div>
+          <button onclick="removeMedication(${idx})" class="text-rose-500 hover:text-rose-700 font-bold text-xs sm:text-sm no-print">✕</button>
+        </div>
+      `).join('');
+
+      const notes = document.getElementById('ord-notes')?.value || 'À prendre au milieu des repas.';
+      const notesEl = document.getElementById('ord-preview-notes-text');
+      if (notesEl) notesEl.textContent = notes;
+    }
+
+    function sendOrdonnanceWhatsApp() {
+      const pName = document.getElementById('ord-preview-patient')?.textContent || 'Patient';
+      const text = encodeURIComponent(`Bonjour ${pName}, votre ordonnance médicale certifiée SahaTN du Dr. Selim Ben Ali est prête et disponible.`);
+      window.open(`https://wa.me/?text=${text}`, '_blank');
+    }
+
+    function renderCnamSheet() {
+      const p = document.getElementById('cnam-inp-patient')?.value || 'Fatma Ben Abdallah';
+      const carnet = document.getElementById('cnam-inp-carnet')?.value || 'CNAM-99014-B';
+      const fee = parseInt(document.getElementById('cnam-inp-acte')?.value || '70');
+
+      const partCnam = Math.round(fee * 0.7);
+      const ticket = fee - partCnam;
+
+      document.getElementById('cnam-sheet-patient').textContent = p;
+      document.getElementById('cnam-sheet-carnet').textContent = `N° ${carnet}`;
+      document.getElementById('cnam-sheet-fee').textContent = `${fee} TND`;
+      document.getElementById('cnam-sheet-part').textContent = `${partCnam} TND`;
+
+      document.getElementById('cnam-calc-part').textContent = `${partCnam} TND`;
+      document.getElementById('cnam-calc-ticket').textContent = `${ticket} TND`;
+    }
+
+    function renderLiaisonLetter() {
+      const doc = document.getElementById('liaison-inp-doc')?.value || 'Dr. Meriem Karray';
+      const p = document.getElementById('liaison-inp-patient')?.value || 'Fatma Ben Abdallah';
+      const body = document.getElementById('liaison-inp-body')?.value || '';
+
+      document.getElementById('liaison-letter-doc').textContent = doc;
+      document.getElementById('liaison-letter-patient').textContent = p;
+      document.getElementById('liaison-letter-body').textContent = body;
+    }
+
+    function triggerCabinetDelay(mins) {
+      const badge = document.getElementById('header-delay-badge');
+      const val = document.getElementById('header-delay-val');
+      const statusText = document.getElementById('delay-status-text');
+
+      if (badge && val) {
+        val.textContent = `+${mins} min`;
+        badge.classList.remove('hidden');
+      }
+
+      if (statusText) {
+        statusText.className = 'text-amber-700 font-bold text-base';
+        statusText.textContent = `⚠️ Retard de +${mins} minutes signalé et transmis au Secrétariat & aux Patients.`;
+      }
+
+      localStorage.setItem('sahatn_cabinet_delay', mins.toString());
+
+      if (window.SahaTNNotif) {
+        window.SahaTNNotif.push('secretaire', '⏱️', 'Signalement Retard Médecin', `Dr. Selim BEN ALI a signalé un retard de +${mins} minutes au cabinet.`);
+        window.SahaTNNotif.push('patient', '⏱️', 'Rappel Consultation', `Dr. Selim BEN ALI accuse un retard de +${mins} minutes.`);
+      }
+
+      alert(`⏱️ Signalement transmis ! Retard de +${mins} min affiché sur la file d'attente du secrétariat et notifié en direct.`);
+    }
+
+    function resetCabinetDelay() {
+      const badge = document.getElementById('header-delay-badge');
+      const statusText = document.getElementById('delay-status-text');
+
+      if (badge) badge.classList.add('hidden');
+      if (statusText) {
+        statusText.className = 'text-emerald-700 font-bold text-base';
+        statusText.textContent = `🟢 Le cabinet fonctionne à l'heure exacte.`;
+      }
+
+      localStorage.removeItem('sahatn_cabinet_delay');
+      alert(`🟢 Retard réinitialisé ! Le cabinet fonctionne à l'heure exacte.`);
+    }
+
+    function navigateToPage(targetPage, e) {
+      if (e) e.preventDefault();
+      window.location.href = targetPage;
+    }
+
+    function logoutDoctor(e) {
+      if (e) e.preventDefault();
+      sessionStorage.removeItem('sahatn_doctor_authenticated');
+      navigateToPage('landing.html', e);
+    }
+  </script>
+</body>
+
+</html>

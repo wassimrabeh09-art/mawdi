@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>موعدي — Espace Soignant & Praticiens</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css" onerror="this.onerror=null; this.href='../css/style.css';">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-[#edf7f9] text-slate-800 antialiased font-['Plus_Jakarta_Sans'] min-h-screen flex flex-col justify-between">
+
+  <!-- HEADER NAV -->
+  <header class="bg-[#00b4b6] text-white py-3.5 border-b border-cyan-600/30 sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <a href="index.html" class="flex items-center group">
+        <div class="bg-white px-4 py-2 rounded-2xl shadow-md flex items-center justify-center group-hover:scale-105 transition-all duration-300">
+          <img src="images/logo.png" onerror="this.onerror=null; this.src='../images/logo.png';" alt="موعدي" class="h-10 sm:h-12 object-contain bg-white px-2 py-1 rounded-2xl shadow-sm">
+        </div>
+      </a>
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm px-4 py-2 rounded-full transition-all border border-white/20">
+          ← Retour à l'accueil
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN AUTH FORM CONTAINER -->
+  <main class="flex-grow flex items-center justify-center py-12 px-4">
+    <div class="bg-white w-full max-w-4xl rounded-[32px] shadow-2xl border border-teal-100/80 overflow-hidden grid grid-cols-1 md:grid-cols-12 text-left">
+
+      <!-- LEFT SIDE: Hero Info -->
+      <div class="md:col-span-5 bg-gradient-to-br from-[#00b4b6] via-teal-700 to-[#002b49] p-8 text-white flex flex-col justify-between relative overflow-hidden">
+        <div class="relative z-10 space-y-4">
+          <div class="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-2 rounded-2xl w-max border border-white/15">
+            <img src="images/logo.png" onerror="this.onerror=null; this.src='../images/logo.png';" alt="موعدي" class="h-10 sm:h-12 object-contain bg-white px-2 py-1 rounded-2xl shadow-sm">
+            <span class="text-sm font-black text-white">موعدي</span>
+          </div>
+          <h2 class="text-2xl font-black text-white leading-tight">Espace Praticiens & Cabinet Médical</h2>
+          <p class="text-xs text-teal-100 font-medium leading-relaxed">
+            Rejoignez le réseau national médical en Tunisie. Gérez vos rendez-vous, ordonnances PCT et dossier médical patient.
+          </p>
+        </div>
+
+        <div class="relative z-10 my-6 flex justify-center">
+          <div class="w-40 h-40 rounded-full bg-white/15 backdrop-blur-md p-3 border-2 border-white/20 shadow-xl flex items-center justify-center">
+            <img src="images/doctor.png" onerror="this.onerror=null; this.src='../images/doctor.png';" alt="Docteur Soignant" class="w-full h-full object-cover rounded-full">
+          </div>
+        </div>
+
+        <div class="relative z-10 text-[11px] text-teal-100 font-bold space-y-1 pt-2 border-t border-white/15">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-300"></span>
+            <span>+1 400 Soignants Connectés en Tunisie</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE: Auth Form -->
+      <div class="md:col-span-7 p-8 sm:p-10 flex flex-col justify-between space-y-6">
+        <div>
+          <h3 class="text-2xl font-black text-[#002b49]">Connexion Espace Soignant</h3>
+          <p class="text-xs text-slate-500 font-medium pt-1">Accédez à votre tableau de bord médical.</p>
+        </div>
+
+        <form onsubmit="window.handlePortalLogin(event)" class="space-y-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Identifiant Professionnel / Email</label>
+            <input type="email" id="modal-login-email" required value="dr.selim@mawadi.tn" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-800 outline-none focus:ring-2 focus:ring-[#00b4b6]">
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Mot de Passe</label>
+            <input type="password" id="modal-login-pass" required value="Doctor2026!" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-800 outline-none focus:ring-2 focus:ring-[#00b4b6]">
+          </div>
+
+          <div class="bg-[#edf7f9] p-3 rounded-2xl border border-teal-100 space-y-2 text-[11px]">
+            <div class="flex items-center justify-between">
+              <span class="text-slate-700 font-bold">🩺 Démo Médecin: <strong>dr.selim@mawadi.tn</strong></span>
+              <button type="button" onclick="window.fillDoctorDemoModal()" class="bg-[#002b49] text-white text-[10px] font-black px-3 py-1 rounded-xl cursor-pointer">Fill 🩺</button>
+            </div>
+            <div class="flex items-center justify-between border-t border-teal-100/60 pt-1.5">
+              <span class="text-slate-700 font-bold">👤 Démo Patient: <strong>patient@mawadi.tn</strong></span>
+              <button type="button" onclick="window.fillPatientDemoModal()" class="bg-[#00b4b6] text-white text-[10px] font-black px-3 py-1 rounded-xl cursor-pointer">Fill 👤</button>
+            </div>
+          </div>
+
+          <button type="submit" id="modal-submit-btn" class="w-full bg-[#00b4b6] hover:bg-teal-600 text-white font-black py-4 px-6 rounded-2xl text-xs sm:text-sm shadow-xl transition-all cursor-pointer text-center">
+            Accéder à l'Espace Soignant →
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#002b49] text-slate-400 py-6 text-xs text-center">
+    <p>© 2026 موعدي. Tous droits réservés.</p>
+  </footer>
+
+  <script>
+    window.fillDoctorDemoModal = function () {
+      document.querySelectorAll("#modal-login-email, input[type='email']").forEach(function(inp) { inp.value = "dr.selim@mawadi.tn"; });
+      document.querySelectorAll("#modal-login-pass, input[type='password']").forEach(function(inp) { inp.value = "Doctor2026!"; });
+    };
+
+    window.fillPatientDemoModal = function () {
+      document.querySelectorAll("#modal-login-email, input[type='email']").forEach(function(inp) { inp.value = "patient@mawadi.tn"; });
+      document.querySelectorAll("#modal-login-pass, input[type='password']").forEach(function(inp) { inp.value = "Patient2026!"; });
+    };
+
+    window.handlePortalLogin = function (e) {
+      if (e && e.preventDefault) e.preventDefault();
+      var email = document.getElementById("modal-login-email") ? document.getElementById("modal-login-email").value.trim().toLowerCase() : "dr.selim@mawadi.tn";
+      
+      var isInsidePages = window.location.pathname.indexOf("/pages/") !== -1;
+      if (email === "admin@mawadi.tn") {
+        sessionStorage.setItem("موعدي_admin_authenticated", "true");
+        window.location.href = isInsidePages ? "admin-db.html" : "pages/admin-db.html";
+      } else if (email.indexOf("patient") !== -1) {
+        sessionStorage.setItem("موعدi_patient_authenticated", "true");
+        window.location.href = isInsidePages ? "patients.html" : "pages/patients.html";
+      } else if (email.indexOf("dr") !== -1 || email.indexOf("doctor") !== -1 || email.indexOf("selim") !== -1) {
+        sessionStorage.setItem("موعدي_doctor_authenticated", "true");
+        window.location.href = isInsidePages ? "doctor-dashboard.html" : "pages/doctor-dashboard.html";
+      } else {
+        sessionStorage.setItem("موعدي_secretaire_authenticated", "true");
+        window.location.href = isInsidePages ? "secretaire.html" : "pages/secretaire.html";
+      }
+    };
+  </script>
+</body>
+
+</html>
