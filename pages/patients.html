@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>موعدي — Prise de RDV Médical en Ligne en Tunisie</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/style.css" onerror="this.onerror=null; this.href='../css/style.css';">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col font-['Plus_Jakarta_Sans']">
+
+  <!-- TOP NAV HEADER -->
+  <header class="bg-[#00b4b6] text-white py-3.5 sticky top-0 z-50   ">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+
+      <!-- Brand Logo -->
+      <a href="landing.html" class="flex items-center group">
+        <div class="bg-white px-3.5 py-1.5 rounded-2xl shadow-md flex items-center justify-center group-hover:scale-105 transition-all duration-300">
+          <img src="../images/logo.png" onerror="this.onerror=null; this.src='../images/logo.png';" alt="موعدي" class="h-8 sm:h-10 object-contain bg-white px-2 py-0.5 rounded-2xl shadow-sm">
+        </div>
+      </a>
+
+      <!-- Right Action Buttons -->
+      <div class="flex items-center gap-3 sm:gap-4">
+
+        <!-- Notification Bell Dropdown (Matching User Image Spec) -->
+        <div class="relative">
+          <button onclick="togglePatientNotifDropdown()" id="pat-notif-bell-btn" class="relative p-2 rounded-xl text-white hover:bg-white/15 transition-all cursor-pointer group flex items-center justify-center" title="Notifications Patient">
+            <svg class="w-6 h-6 text-white group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+            </svg>
+            <span id="pat-notif-count" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-[#00b4b6] shadow-md animate-pulse">
+              1
+            </span>
+          </button>
+
+          <!-- Notification Panel Dropdown -->
+          <div id="pat-notif-menu" class="hidden absolute right-0 top-full mt-3 w-80 sm:w-96 bg-white text-slate-800 rounded-3xl shadow-2xl border border-slate-200 z-50 overflow-hidden">
+            <div class="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="font-extrabold text-sm text-[#032b43]">🔔 Notifications Patient</span>
+                <span id="pat-notif-badge-label" class="bg-red-500/10 text-red-600 text-xs font-black px-2.5 py-0.5 rounded-full">1 nouvelle</span>
+              </div>
+              <button onclick="clearPatientNotifications()" class="text-[11px] text-[#00A896] hover:underline font-bold">Tout marquer comme lu</button>
+            </div>
+            <div id="pat-notif-list" class="max-h-80 overflow-y-auto divide-y divide-slate-100">
+              <div class="p-4 hover:bg-slate-50 transition-all flex items-start gap-3 cursor-pointer">
+                <span class="w-8 h-8 rounded-full bg-teal-50 text-[#00A896] flex items-center justify-center shrink-0 text-sm font-bold">📅</span>
+                <div class="space-y-1">
+                  <p class="text-xs font-bold text-slate-800">Rappel RDV Confirmé</p>
+                  <p class="text-[11px] text-slate-500">Votre RDV avec Dr. Selim BEN ALI (Cardiologue) est prévu demain à 09:30.</p>
+                  <span class="text-[10px] text-slate-400 font-medium">Il y a 15 min</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Button 1: Vous êtes soignant ? -->
+        <a href="doctor-auth.html"
+          class="bg-white hover:bg-slate-100 text-[#0086cd] font-bold text-xs sm:text-sm px-4 sm:px-6 py-2.5 rounded-full shadow-md transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg flex items-center justify-center gap-2 whitespace-nowrap">
+          Vous êtes soignant ?
+        </a>
+
+        <!-- Button 2: Centre d'aide -->
+        <a href="landing.html#aide"
+          class="text-white hover:text-teal-100 font-bold text-xs sm:text-sm transition-all duration-300 flex items-center gap-2 transform hover:scale-105 group/nav">
+          <span
+            class="w-6 h-6 rounded-full border-2 border-white/80 flex items-center justify-center text-xs font-bold group-hover/nav:bg-white group-hover/nav:text-[#0086cd] transition-all">?</span>
+          <span class="hidden md:inline">Centre d'aide</span>
+        </a>
+
+        <!-- Quitter / Logout Button (Matching User Spec) -->
+        <a href="landing.html" onclick="logoutPatient(event)" title="Déconnexion" class="bg-[#e63946] hover:bg-rose-600 text-white font-black text-xs sm:text-sm px-4 py-2 rounded-full shadow-md transition-all flex items-center gap-1.5 shrink-0 group cursor-pointer">
+          <svg class="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Quitter</span>
+        </a>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- DOCTOLIB STYLE SEARCH HEADER BAR -->
+  <section class="bg-[#00b4b6] pb-8 pt-4 px-4 border-b border-blue-600/30">
+    <div class="max-w-5xl mx-auto">
+      
+      <!-- Integrated White Search Pill Container -->
+      <div class="bg-white rounded-full p-2 shadow-xl shadow-blue-950/20 flex flex-col md:flex-row items-center justify-between gap-2 border border-slate-100">
+        
+        <!-- Field 1: Doctor Name / Specialty -->
+        <div class="flex items-center gap-3 px-4 py-1.5 flex-1 w-full border-b md:border-b-0 md:border-r border-slate-200 relative">
+          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <div class="w-full relative">
+            <input type="text" id="search-keyword" placeholder="Nom, spécialité, acte..." 
+                   class="w-full bg-transparent text-sm font-bold text-slate-900 outline-none placeholder:text-slate-400 placeholder:font-medium" autocomplete="off">
+            <div id="search-keyword-suggestions" class="hidden absolute left-0 right-0 top-full mt-3 bg-white rounded-2xl shadow-2xl border border-slate-200 z-50 max-h-72 overflow-y-auto p-2 text-left"></div>
+          </div>
+        </div>
+
+        <!-- Field 2: Location / Governorate -->
+        <div class="flex items-center gap-3 px-4 py-1.5 flex-1 w-full relative">
+          <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          <div class="w-full relative flex items-center">
+            <input type="text" id="search-location-input" placeholder="Gouvernorat, localité, ville..." 
+                   class="w-full bg-transparent text-sm font-bold text-slate-900 outline-none placeholder:text-slate-400 placeholder:font-medium" autocomplete="off">
+            <div id="search-location-suggestions" class="hidden absolute left-0 right-0 top-full mt-3 bg-white rounded-2xl shadow-2xl border border-slate-200 z-50 max-h-72 overflow-y-auto p-2 text-left"></div>
+          </div>
+          <button type="button" title="Me géolocaliser" class="text-slate-400 hover:text-[#0086cd] transition-colors shrink-0">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+          </button>
+        </div>
+
+        <!-- Search Button -->
+        <button id="search-btn" 
+                class="w-full md:w-auto bg-[#032b43] hover:bg-[#002b49] text-white font-extrabold px-8 py-3.5 rounded-full text-xs uppercase tracking-wider shadow-md transition-all duration-300 flex items-center justify-center gap-1.5 shrink-0">
+          <span>Rechercher</span>
+          <span>›</span>
+        </button>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SUB-HEADER FILTER PILLS ROW -->
+  <section class="bg-white border-b border-slate-200 py-3 px-4 sticky top-[60px] z-40 shadow-xs">
+    <div class="max-w-7xl mx-auto flex items-center gap-3 text-xs font-bold text-slate-700 flex-wrap">
+      
+      <!-- Filter Button 1: All Filters -->
+      <!-- <button id="filter-all-btn" class="bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-full border border-slate-300 transition-all flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.707 7.293A1 1 0 013 6.586V4z"/>
+        </svg>
+        <span>Filtres</span>
+      </button> -->
+
+      <!-- Filter Button 2: Disponibilités -->
+      <button id="filter-avail-btn" class="bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-full border border-slate-300 transition-all flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+        <span>Disponibilités</span>
+      </button>
+
+      <!-- Filter Button 3: Secteur / CNAM -->
+      <!-- <button id="filter-cnam-btn" class="bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-full border border-slate-300 transition-all flex items-center gap-1.5">
+        <span class="text-slate-600 font-extrabold">€</span>
+        <span>Secteur / CNAM</span>
+      </button> -->
+
+    </div>
+  </section>
+<!-- MAIN RESULTS & MAP LAYOUT (2 COLUMNS - ÉLARGIE) -->
+<main class="flex-1 max-w-[1450px] w-full mx-auto px-4 sm:px-6 lg:px-10 py-8">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+    <!-- LEFT COLUMN: RESULTS COUNTER & DOCTORS LIST MATRIX -->
+    <div class="lg:col-span-9 space-y-6">
+      
+      <!-- Results Counter Title -->
+      <div class=" space-y-1.5">
+        <h1 id="search-results-title" class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+          <span id="results-count">1 400</span> résultats
+        </h1>
+        <p id="search-results-subtitle" class="text-sm text-slate-500 font-medium">
+          Médecins & spécialistes en Tunisie : réservez vos rendez-vous en ligne
+        </p>
+      </div>
+
+      <!-- DOCTORS LIST MATRIX (RENDERED DYNAMICALLY BY APP.JS) -->
+      <div id="doctor-list-container" class="space-y-6">
+        <!-- Rendered dynamically -->
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN: STICKY MAP CARD (PLUS LARGE ET PLUS LISIBLE) -->
+    <div class="lg:col-span-3 hidden lg:block sticky top-28 space-y-4">
+      <div class="bg-[#f8fafc] rounded-3xl p-8 border border-slate-200/90 shadow-sm text-center space-y-6">
+        
+        <div class="w-20 h-20 rounded-full bg-sky-100 text-[#0086cd] flex items-center justify-center mx-auto text-3xl">
+          <img src="/images/map (1).png" alt="Carte icon" class="w-10 h-10 object-contain">
+        </div>
+
+        <p class="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
+          J'autorise le traitement d'informations (dont mon adresse IP) afin d'afficher la géolocalisation des cabinets médicaux en Tunisie.
+          <a href="landing.html#aide" class="text-[#0086cd] hover:underline font-bold block mt-1">En savoir plus</a>
+        </p>
+
+        <button onclick="alert('🗺️ Carte interactive des cabinets médicaux en Tunisie activée avec succès !')" 
+                class="w-full bg-[#0086cd] hover:bg-[#0074b3] text-white font-extrabold py-4 px-6 rounded-xl shadow-md hover:shadow-lg transition-all uppercase tracking-wider text-sm flex items-center justify-center gap-2 cursor-pointer">
+          <span>AFFICHER LA CARTE</span>
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+</main>
+
+  <!-- DISPONIBILITÉS FILTER MODAL POPUP -->
+  <div id="availability-modal" class="fixed inset-0 z-50 modal-overlay flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 relative space-y-6 animate-fadeIn">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+        <div class="flex items-center gap-2.5 ">
+            <img src="/images/calendar.png" class="w-7 h-7" alt="">
+          <h3 class="text-xl font-extrabold text-slate-900 tracking-tight">Disponibilités</h3>
+        </div>
+        <button onclick="window.closeAvailabilityModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center font-bold transition-all text-sm">
+          ✕
+        </button>
+      </div>
+
+      <!-- Radio Options List Container -->
+      <div class="border border-slate-200/90 rounded-2xl overflow-hidden divide-y divide-slate-100 bg-white shadow-xs">
+        
+        <!-- Option 1: Aujourd'hui -->
+        <label class="flex items-center gap-3.5 p-4 cursor-pointer hover:bg-cyan-50/60 transition-all text-xs sm:text-sm font-bold text-slate-800 group">
+          <input type="radio" name="avail-option" value="today" class="w-4 h-4 text-[#0086cd] focus:ring-[#0086cd] border-slate-300">
+          <span class="group-hover:text-[#0086cd] transition-colors">Aujourd'hui</span>
+        </label>
+
+        <!-- Option 2: Dans les 3 prochains jours -->
+        <label class="flex items-center gap-3.5 p-4 cursor-pointer hover:bg-cyan-50/60 transition-all text-xs sm:text-sm font-bold text-slate-800 group">
+          <input type="radio" name="avail-option" value="3days" class="w-4 h-4 text-[#0086cd] focus:ring-[#0086cd] border-slate-300">
+          <span class="group-hover:text-[#0086cd] transition-colors">Dans les 3 prochains jours</span>
+        </label>
+
+        <!-- Option 3: Dans les 7 prochains jours -->
+        <label class="flex items-center gap-3.5 p-4 cursor-pointer hover:bg-cyan-50/60 transition-all text-xs sm:text-sm font-bold text-slate-800 group">
+          <input type="radio" name="avail-option" value="7days" class="w-4 h-4 text-[#0086cd] focus:ring-[#0086cd] border-slate-300">
+          <span class="group-hover:text-[#0086cd] transition-colors">Dans les 7 prochains jours</span>
+        </label>
+
+        <!-- Option 4: Dans les 14 prochains jours -->
+        <label class="flex items-center gap-3.5 p-4 cursor-pointer hover:bg-cyan-50/60 transition-all text-xs sm:text-sm font-bold text-slate-800 group">
+          <input type="radio" name="avail-option" value="14days" class="w-4 h-4 text-[#0086cd] focus:ring-[#0086cd] border-slate-300">
+          <span class="group-hover:text-[#0086cd] transition-colors">Dans les 14 prochains jours</span>
+        </label>
+
+      </div>
+
+      <!-- Action Buttons Footer -->
+      <div class="flex items-center justify-between pt-2 gap-4">
+        <button type="button" onclick="window.clearAvailabilityFilter()" class="text-xs font-extrabold text-slate-400 hover:text-slate-700 uppercase tracking-wider transition-colors py-2 px-1">
+          EFFACER CE FILTRE
+        </button>
+
+        <button type="button" onclick="window.applyAvailabilityFilter()" class="bg-[#0086cd] hover:bg-[#0074b3] text-white font-extrabold text-xs px-6 py-3 rounded-xl shadow-md transition-all uppercase tracking-wider">
+          AFFICHER LES RÉSULTATS
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BOOKING CONFIRMATION MODAL -->
+  <div id="booking-modal" class="fixed inset-0 z-50 modal-overlay flex items-center justify-center p-4 sm:p-6 hidden">
+    <div class="bg-white rounded-3xl max-w-xl sm:max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative space-y-6">
+      
+      <!-- Close Button -->
+      <button onclick="window.closeBookingModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 flex items-center justify-center text-sm font-bold transition-colors">✕</button>
+
+      <!-- Doctor Header Info -->
+      <div class="flex items-center gap-4 border-b border-slate-100 pb-4">
+        <div class="relative shrink-0">
+          <img id="modal-doc-avatar" src="../../images/3ila_doctor.jpeg" alt="Médecin" class="w-14 h-14 rounded-2xl object-cover border-2 border-teal-100 shadow-sm">
+          <span class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-white rounded-full"></span>
+        </div>
+        <div class="min-w-0 flex-1">
+         
+          <h3 id="modal-doc-name" class="text-base sm:text-lg font-black text-slate-900 leading-snug truncate">Dr. Selim Ben Ali</h3>
+          <p id="modal-doc-spec" class="text-xs font-bold text-slate-500 truncate">Cardiologie & Maladies Vasculaires • Tunis</p>
+        </div>
+      </div>
+
+      <!-- 3 Key Summary Items Container -->
+      <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-3">
+        <!-- 1. Créneau -->
+        <div class="flex items-center justify-between gap-2 text-xs">
+          <span class="text-slate-600 text-sm font-bold flex items-center gap-1.5 shrink-0">
+           Créneau sélectionné :
+          </span>
+          <span id="modal-slot-time" class="bg-[#e8f6fd] text-[#0086cd] font-black px-3 py-1 rounded-xl text-xs sm:text-sm border border-blue-100 shadow-xs">
+            Demain à 10:15
+          </span>
+        </div>
+
+        <!-- 2. Honoraires -->
+        <div class="flex items-center justify-between gap-2 text-xs pt-1 border-t border-slate-200/60">
+          <span class="text-slate-600 text-sm font-bold flex items-center gap-1.5 shrink-0">
+             Honoraires consultation :
+          </span>
+          <span id="modal-doc-fee" class="font-black text-slate-900 text-sm sm:text-base">
+            70 TND
+          </span>
+        </div>
+
+        <!-- 3. CNAM Coverage -->
+        <div class="pt-1 border-t border-slate-200/60 flex items-center justify-between text-xs" id="modal-doc-cnam-container">
+          <span class="text-slate-600 text-sm font-bold flex items-center gap-1.5 shrink-0">
+             Prise en charge CNAM :
+          </span>
+          <span id="modal-doc-cnam-info" class="text-right font-extrabold text-emerald-700">
+            <span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded-xl">~49 TND</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Form Inputs -->
+      <form onsubmit="window.confirmBooking(event)" class="space-y-4">
+        
+        <!-- Field 1: Patient Name -->
+        <div>
+          <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1 flex items-center gap-1">
+            Nom & Prénom du Patient <span class="text-rose-500">*</span>
+          </label>
+          <div class="relative">
+            <input type="text" id="patient-name-input" required  placeholder="Ex. Wassim ben Rabeh"
+                   class="w-full bg-slate-50 border border-slate-200 focus:bg-white focus:border-[#0086cd] rounded-xl p-3 text-xs sm:text-sm font-bold text-slate-900 outline-none transition-all shadow-xs"
+                   >
+          </div>
+        </div>
+
+        <!-- Field 2: Patient Phone -->
+        <div>
+          <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1 flex items-center gap-1">
+           Numéro de Téléphone <span class="text-rose-500">*</span>
+          </label>
+          <div class="relative">
+            <input type="tel" id="patient-phone-input" required  placeholder="+216 -- --- ---"
+                   class="w-full bg-slate-50 border border-slate-200 focus:bg-white focus:border-[#0086cd] rounded-xl p-3 text-xs sm:text-sm font-bold text-slate-900 outline-none transition-all shadow-xs">
+          </div>
+        </div>
+
+        <!-- Field 3: CNAM Card Number -->
+        <div>
+          <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1 flex items-center gap-1">
+          Numéro de Carnet CNAM <span class="text-slate-400 font-normal">(Optionnel)</span>
+          </label>
+          <div class="relative">
+            <input type="text" id="patient-cnam-input" placeholder="Ex. CNAM-XXXXX-X"
+                   class="w-full bg-slate-50 border border-slate-200 focus:bg-white focus:border-[#0086cd] rounded-xl p-3 text-xs sm:text-sm font-bold text-slate-900 outline-none transition-all shadow-xs">
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" 
+                class="w-full bg-[#0086cd] hover:bg-[#0074b3] text-white font-extrabold py-3.5 px-4 rounded-xl shadow-lg shadow-cyan-500/20 transition-all text-sm uppercase tracking-wider flex items-center justify-center gap-2 transform hover:scale-[1.01]">
+          <span>✓ Confirmer Mon Rendez-vous</span>
+        </button>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#032b43] text-slate-200 pt-16 pb-12 border-t border-teal-900/40 text-xs sm:text-sm mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-10 border-b border-slate-700/60">
+        <div class="lg:col-span-4 space-y-4">
+          <a href="landing.html" class="flex items-center group">
+        <div class="bg-white px-3.5 py-1.5 rounded-2xl shadow-md flex items-center justify-center group-hover:scale-105 transition-all duration-300">
+          <img src="../images/logo.png" onerror="this.onerror=null; this.src='../images/logo.png';" alt="موعدي" class="h-8 sm:h-10 object-contain bg-white px-2 py-0.5 rounded-2xl shadow-sm">
+        </div>
+      </a>
+          <p class="text-slate-300 text-sm leading-relaxed max-w-sm font-normal">
+            La première plateforme médicale nationale dédiée à la digitalisation des consultations et à la prise de rendez-vous en Tunisie.
+          </p>
+        </div>
+
+        <div class="lg:col-span-3 space-y-3">
+          <h4 class="text-white font-extrabold text-base tracking-wider text-[#00b4b6]">Espace Patient</h4>
+          <ul class="space-y-2.5 text-slate-200 text-sm font-medium">
+            <li><a href="patients.html" class="hover:text-[#00b4b6] flex items-center gap-2"><span class="text-[#00b4b6] font-bold">›</span> Prise de RDV Médical en Ligne</a></li>
+            <li><a href="patients.html" class="hover:text-[#00b4b6] flex items-center gap-2"><span class="text-[#00b4b6] font-bold">›</span> Recherche Médecins & Spécialités</a></li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-3 space-y-3">
+          <h4 class="text-white font-extrabold text-base tracking-wider text-[#00b4b6]">Espace Praticien</h4>
+          <ul class="space-y-2.5 text-slate-200 text-sm font-medium">
+            <li><a href="doctor-auth.html" class="hover:text-[#00b4b6] flex items-center gap-2"><span class="text-[#00b4b6] font-bold">›</span> Inscription & Création de Cabinet</a></li>
+            <li><a href="doctor-auth.html" class="hover:text-[#00b4b6] flex items-center gap-2"><span class="text-[#00b4b6] font-bold">›</span> Connexion Espace Soignant</a></li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-2 space-y-3">
+          <h4 class="text-white font-extrabold text-base tracking-wider text-[#00b4b6]">Projet & BDD</h4>
+          <ul class="space-y-2.5 text-slate-200 text-sm font-medium">
+            <li><a href="admin-db.html" class="hover:text-cyan-300 font-bold text-cyan-300 flex items-center gap-2"><span class="text-cyan-400 font-bold">›</span> Inspecteur BDD SQL</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="text-center text-xs text-slate-300 font-medium">
+        <p>© 2026 SahaTN. Tous droits réservés. Plateforme Santé Numérique Tunisie.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="js/data.js" onerror="this.onerror=null; this.src='../js/data.js';"></script>
+  <script src="js/app.js" onerror="this.onerror=null; this.src='../js/app.js';"></script>
+  <script>
+    window.openLoginModal = function () {
+      const modal = document.getElementById('login-modal');
+      if (modal) modal.classList.remove('hidden');
+    };
+
+    window.closeLoginModal = function () {
+      const modal = document.getElementById('login-modal');
+      if (modal) modal.classList.add('hidden');
+    };
+
+    window.togglePassVisibility = function () {
+      const passInp = document.getElementById('modal-login-pass');
+      const btn = document.getElementById('pass-toggle-btn');
+      if (passInp) {
+        if (passInp.type === 'password') {
+          passInp.type = 'text';
+          if (btn) btn.innerHTML = `<svg class="w-4 h-4 text-[#00A896]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-5.908a10.046 10.046 0 013.682-.821c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m-4.092-4.092a3 3 0 11-4.243-4.243"/></svg>`;
+        } else {
+          passInp.type = 'password';
+          if (btn) btn.innerHTML = `<svg class="w-4 h-4 text-slate-400 hover:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>`;
+        }
+      }
+    };
+
+    window.fillDoctorDemoModal = function () {
+      const emailInp = document.getElementById('modal-login-email');
+      const passInp = document.getElementById('modal-login-pass');
+      if (emailInp) emailInp.value = 'dr.selim@sahatn.tn';
+      if (passInp) passInp.value = 'Doctor2026!';
+    };
+
+    window.fillSecretaireDemoModal = function () {
+      const emailInp = document.getElementById('modal-login-email');
+      const passInp = document.getElementById('modal-login-pass');
+      if (emailInp) emailInp.value = 'secretaire@sahatn.tn';
+      if (passInp) passInp.value = 'SahaTNSecretaire2026!';
+    };
+
+    window.fillAdminDemoModal = function () {
+      const emailInp = document.getElementById('modal-login-email');
+      const passInp = document.getElementById('modal-login-pass');
+      if (emailInp) emailInp.value = 'admin@sahatn.tn';
+      if (passInp) passInp.value = 'SahaTNAdmin2026!';
+    };
+
+    window.handlePortalLogin = function (e) {
+      if (e) e.preventDefault();
+      const email = document.getElementById('modal-login-email')?.value.trim().toLowerCase() || '';
+      const pass = document.getElementById('modal-login-pass')?.value.trim() || '';
+      const errEl = document.getElementById('modal-login-error');
+      const submitBtn = document.getElementById('modal-submit-btn');
+
+      if (errEl) errEl.classList.add('hidden');
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.className = 'w-full bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-black py-4 px-6 rounded-2xl text-xs sm:text-sm shadow-2xl transition-all cursor-wait text-center flex items-center justify-center gap-2 animate-pulse';
+        submitBtn.innerHTML = `
+          <svg class="w-5 h-5 text-white animate-spin shrink-0" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span>Authentification sécurisée...</span>
+        `;
+      }
+
+      setTimeout(() => {
+        if (submitBtn) {
+          submitBtn.className = 'w-full bg-emerald-600 text-white font-black py-4 px-6 rounded-2xl text-xs sm:text-sm shadow-2xl transition-all text-center flex items-center justify-center gap-2';
+          submitBtn.innerHTML = `
+            <span class="text-base animate-bounce">✓</span>
+            <span>Session Authentifiée ! Redirection...</span>
+          `;
+        }
+
+        setTimeout(() => {
+          if (email === 'admin@sahatn.tn') {
+            sessionStorage.setItem('sahatn_admin_authenticated', 'true');
+            window.location.href = 'admin-db.html';
+          } else if (email.includes('dr') || email.includes('doctor') || email.includes('selim')) {
+            sessionStorage.setItem('sahatn_doctor_authenticated', 'true');
+            window.location.href = 'doctor-dashboard.html';
+          } else {
+            sessionStorage.setItem('sahatn_secretaire_authenticated', 'true');
+            window.location.href = 'secretaire.html';
+          }
+        }, 400);
+
+      }, 650);
+    };
+  </script>
+
+  <!-- LOGIN MODAL DIALOG (2-COLUMN FUSED PREMIUM LAYOUT) -->
+  <div id="login-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden transition-all duration-300">
+    <div class="bg-white w-full max-w-4xl rounded-[32px] shadow-2xl border border-teal-100/80 overflow-hidden relative grid grid-cols-1 md:grid-cols-12 text-left transition-all">
+      
+      <!-- Close Button -->
+      <button onclick="window.closeLoginModal()" type="button" class="absolute top-4 right-4 z-20 text-slate-400 hover:text-slate-700 bg-slate-100 hover:bg-slate-200 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-all cursor-pointer">✕</button>
+
+      <!-- LEFT COLUMN: Hero Brand & Illustration (5 Cols) -->
+      <div class="md:col-span-5 bg-gradient-to-br from-[#00A896] via-teal-700 to-[#032b43] p-8 text-white flex flex-col justify-between relative overflow-hidden">
+        <div class="absolute -top-12 -left-12 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="relative z-10 space-y-6">
+          <div class="inline-flex items-center gap-2 bg-white/15 px-3.5 py-1.5 rounded-full border border-white/20 text-xs font-black uppercase tracking-wider text-teal-100 shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span>Portail Sécurisé Saha.tn</span>
+          </div>
+
+          <div class="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg">
+            <span class="text-3xl">🩺</span>
+          </div>
+
+          <div class="space-y-1">
+            <h4 class="text-lg font-black text-white leading-snug">Votre Santé en Tunisie, <br><span class="text-cyan-200">Simplifiée & Numérisée</span></h4>
+            <p class="text-[11px] text-teal-100/90 font-medium">Rejoignez plus de 1 400 praticiens et cabinets médicaux connectés.</p>
+          </div>
+        </div>
+
+        <div class="relative z-10 border-t border-white/15 pt-4 space-y-2 text-[10px] text-teal-50 font-bold">
+          <div class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-300"></span>
+            <span>Prise de RDV instantanée & Rappels WhatsApp</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span>
+            <span>Espace Secrétariat & Console BDD sécurisés</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Auth Form (7 Cols) -->
+      <div class="md:col-span-7 bg-white p-7 sm:p-9 flex flex-col justify-between space-y-6">
+        
+        <div class="space-y-1 pt-2 sm:pt-0">
+          <h3 class="text-2xl font-extrabold text-[#032b43] tracking-tight">Espace de Connexion</h3>
+          <p class="text-xs text-slate-500 font-medium">Saisissez vos identifiants pour accéder à votre espace.</p>
+        </div>
+
+        <!-- Login Form -->
+        <form onsubmit="window.handlePortalLogin(event)" class="space-y-4 text-xs">
+          
+          <div id="modal-login-error" class="hidden bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-2xl text-xs font-bold flex items-center gap-2">
+            <svg class="w-4 h-4 text-rose-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>Identifiants incorrects. Vérifiez votre email et mot de passe.</span>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1.5">Adresse Email / Identifiant</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              </span>
+              <input type="email" id="modal-login-email" required autocomplete="off" placeholder="votre.email@sahatn.tn" class="w-full pl-10 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-800 text-xs focus:ring-2 focus:ring-[#00A896] focus:border-[#00A896] focus:bg-white outline-none transition-all">
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="block font-bold text-slate-700">Mot de Passe</label>
+              <a href="#" onclick="alert('🔑 Pour la démo, cliquez directement sur Se Connecter.')" class="text-[10px] text-[#00A896] font-bold hover:underline">Mot de passe oublié ?</a>
+            </div>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+              </span>
+              <input type="password" id="modal-login-pass" required autocomplete="current-password" placeholder="Votre mot de passe" class="w-full pl-10 pr-10 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl font-bold text-slate-800 text-xs focus:ring-2 focus:ring-[#00A896] focus:border-[#00A896] focus:bg-white outline-none transition-all">
+              <button type="button" onclick="window.togglePassVisibility()" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 font-bold cursor-pointer" id="pass-toggle-btn">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-[#edf7f9] p-3 rounded-2xl border border-teal-100/80 space-y-2 text-[11px]">
+            <div class="flex items-center justify-between">
+              <span class="text-slate-700 font-bold">🩺 Démo Médecin: <strong class="text-[#002b49]">dr.selim@sahatn.tn</strong></span>
+              <button type="button" onclick="window.fillDoctorDemoModal()" class="bg-[#002b49] hover:bg-slate-900 text-white text-[10px] font-black px-3 py-1 rounded-xl transition-all cursor-pointer shadow-sm">Médecin 🩺</button>
+            </div>
+            <div class="flex items-center justify-between border-t border-teal-100/60 pt-1.5">
+              <span class="text-slate-600 font-medium">Démo Secrétaire: <strong class="text-[#00A896]">secretaire@sahatn.tn</strong></span>
+              <button type="button" onclick="window.fillSecretaireDemoModal()" class="bg-[#00A896] hover:bg-teal-700 text-white text-[10px] font-black px-3 py-1 rounded-xl transition-all cursor-pointer">Secrétaire</button>
+            </div>
+            <div class="flex items-center justify-between border-t border-teal-100/60 pt-1.5">
+              <span class="text-slate-600 font-medium">Démo Admin BDD: <strong class="text-[#032b43]">admin@sahatn.tn</strong></span>
+              <button type="button" onclick="window.fillAdminDemoModal()" class="bg-[#032b43] hover:bg-slate-900 text-white text-[10px] font-black px-3 py-1 rounded-xl transition-all cursor-pointer">Admin BDD</button>
+            </div>
+          </div>
+
+          <button type="submit" id="modal-submit-btn" class="w-full bg-gradient-to-r from-[#00A896] to-teal-700 hover:from-teal-600 hover:to-teal-800 text-white font-black py-4 px-6 rounded-2xl text-xs sm:text-sm shadow-xl shadow-teal-600/20 transition-all transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer text-center flex items-center justify-center gap-2">
+            <span>Se Connecter</span>
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
+
+        </form>
+
+        <div class="border-t border-slate-100 pt-3 flex items-center justify-between text-[10px] text-slate-400 font-bold">
+          <span class="flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            <span>SSL 256-Bit Encrypted</span>
+          </span>
+          <span class="flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            <span>Norme INPDP Santé</span>
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <script>
+    function togglePatientNotifDropdown() {
+      const menu = document.getElementById('pat-notif-menu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    function clearPatientNotifications() {
+      if (window.SahaTNNotif) {
+        window.SahaTNNotif.clearSpace('patient');
+      }
+    }
+
+    document.addEventListener('click', (e) => {
+      const btn = document.getElementById('pat-notif-bell-btn');
+      const menu = document.getElementById('pat-notif-menu');
+      if (menu && btn && !btn.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
